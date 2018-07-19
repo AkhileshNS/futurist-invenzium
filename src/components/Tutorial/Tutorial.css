@@ -17,15 +17,9 @@
 .Tutorial .Tutorialline {
     background: black;
     width: 90%;
-    height: 0.5px;
+    height: 1px;
     display: inline-block;
     margin-top: 90px;
-}
-
-@media only screen and (max-width: 1025px) {
-    .Tutorial .Tutorialline {
-        height: 1px;
-    }
 }
 
 @media only screen and (max-width: 600px) {

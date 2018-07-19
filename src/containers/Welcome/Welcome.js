@@ -6,6 +6,7 @@ import './Welcome.css';
 import Intro from '../../components/Intro/Intro';
 import Info from '../../components/Info/Info';
 import Tutorial from '../../components/Tutorial/Tutorial';
+import Features from '../../components/Features/Features';
 
 class Welcome extends Component {
 
@@ -24,6 +25,9 @@ class Welcome extends Component {
                 </section>
                 <section id={"Info"}>
                     <Info />
+                </section>
+                <section id={"Features"}>
+                    <Features />
                 </section>
                 <section id={"Tutorial"}>
                     <Tutorial />
