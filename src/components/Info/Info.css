@@ -21,3 +21,15 @@
     display: inline-block;
     margin-top: 90px;
 }
+
+@media only screen and (max-width: 1025px) {
+    .Info .Infoline {
+        height: 1px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .Info .Infosubtext {
+        margin: 30px 5%;
+    }
+}

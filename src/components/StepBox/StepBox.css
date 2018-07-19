@@ -3,18 +3,35 @@
     border: 1px solid black;
     display: inline-block;
     text-align: start;
+    transition: width 0.3s;
 }
 
 .StepBox .StepBoxtitle {
+    width: 100%;
     padding: 8px;
     font-size: 1.6em;
     background-color: black;
     color: white;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin: 0px;
 }
 
 .StepBox .StepBoxsubtext {
+    width: 100%;
     padding: 8px;
     font-size: 1.6em;
     white-space: pre-wrap;
     color: black;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin: 0px;
+}
+
+@media only screen and (max-width: 620px) {
+    .StepBox {
+        width: 90%;
+    }
 }
