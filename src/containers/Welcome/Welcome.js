@@ -19,13 +19,13 @@ class Welcome extends Component {
 
         return (
             <Fragment>
-                <section>
+                <section id={"Intro"}>
                     <Intro />
                 </section>
-                <section>
+                <section id={"Info"}>
                     <Info />
                 </section>
-                <section>
+                <section id={"Tutorial"}>
                     <Tutorial />
                 </section>
             </Fragment>
