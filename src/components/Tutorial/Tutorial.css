@@ -1,0 +1,23 @@
+.Tutorial {
+    width: 100%;
+    text-align: center;
+}
+
+.Tutorial .Tutorialtitle {
+    margin-top: 120px;
+    font-weight: 600;
+    font-size: 2.4em;
+}
+
+.Tutorial .Tutorialsubtext {
+    font-size: 1.6em;
+    margin: 30px 10%;
+}
+
+.Tutorial .Tutorialline {
+    background: black;
+    width: 90%;
+    height: 0.5px;
+    display: inline-block;
+    margin-top: 90px;
+}

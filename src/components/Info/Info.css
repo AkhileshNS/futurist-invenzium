@@ -1,0 +1,23 @@
+.Info {
+    width: 100%;
+    text-align: center;
+}
+
+.Info .Infotitle {
+    margin-top: 120px;
+    font-weight: 600;
+    font-size: 2.4em;
+}
+
+.Info .Infosubtext {
+    font-size: 1.6em;
+    margin: 30px 10%;
+}
+
+.Info .Infoline {
+    background: black;
+    width: 90%;
+    height: 0.5px;
+    display: inline-block;
+    margin-top: 90px;
+}

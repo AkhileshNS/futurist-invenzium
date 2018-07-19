@@ -1,0 +1,20 @@
+.StepBox {
+    width: 600px;
+    border: 1px solid black;
+    display: inline-block;
+    text-align: start;
+}
+
+.StepBox .StepBoxtitle {
+    padding: 8px;
+    font-size: 1.6em;
+    background-color: black;
+    color: white;
+}
+
+.StepBox .StepBoxsubtext {
+    padding: 8px;
+    font-size: 1.6em;
+    white-space: pre-wrap;
+    color: black;
+}
