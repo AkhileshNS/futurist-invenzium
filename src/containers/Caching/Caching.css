@@ -7,3 +7,52 @@
     height: 250px;
     width: 100%;
 }
+
+.Cachingbutton {
+    border: 2px solid black;
+    padding: 6px;
+    background-color: black;
+    color: white;
+    font-size: 1.6em;
+    border-radius: 3px;
+    font-family: 'Anton', sans-serif;
+    outline: none;
+}
+
+.Cachingbutton:hover {
+    background-color: white;
+    color: black; 
+}
+
+.Cachingbutton:active {
+    background-color: black;
+    color: white;
+}
+
+.Cachingul {
+    list-style-type: none;
+    width: 768px;
+    display: inline-block;
+}
+
+.Cachingli {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.Cachinginput {
+    width: 90%;
+    margin: 4px;
+    padding: 2px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: 1.2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+    .Cachingul {
+        width: 90%;
+    }
+}
