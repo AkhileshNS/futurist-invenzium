@@ -6,7 +6,7 @@
     transition: width 0.3s;
 }
 
-.StepBox .StepBoxtitle {
+.StepBoxtitle {
     width: 100%;
     padding: 8px;
     font-size: 1.6em;
@@ -18,7 +18,7 @@
     margin: 0px;
 }
 
-.StepBox .StepBoxsubtext {
+.StepBoxsubtext {
     width: 100%;
     padding: 8px;
     font-size: 1.6em;

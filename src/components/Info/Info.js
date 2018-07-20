@@ -21,9 +21,13 @@ const Info = (props) => {
         line=null;
     }
 
+    if (props.titletop===null){
+        props.titletop = 120;
+    }
+
     return (
         <div className={cssClassName}>
-            <p className={`${cssClassName}title`}>{title}</p>
+            <p className={`${cssClassName}title`} style={{marginTop: `${props.titletop}px`}}>{title}</p>
             <p className={`${cssClassName}subtext`}>{subtext}</p>
             {line}
         </div>

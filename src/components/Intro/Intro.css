@@ -8,12 +8,12 @@
     margin-top: 100px;
 }
 
-.Intro .Introsubtext {
+.Introsubtext {
     font-size: 1.6em;
     margin: 30px 10%;
 }
 
-.Intro .Introline {
+.Introline {
     background: black;
     width: 90%;
     height: 1px;
@@ -22,7 +22,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .Intro .Introsubtext {
+    .Introsubtext {
         margin: 30px 5%;
     }
 }

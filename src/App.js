@@ -8,6 +8,7 @@ import AppBar from './containers/AppBar/AppBar';
 
 //Path Components;
 import Welcome from './containers/Welcome/Welcome';
+import Caching from './containers/Caching/Caching';
 
 const cssClassName = "App";
 
@@ -35,6 +36,7 @@ class App extends Component {
         <AppBar show={this.state.show} showMenu={this.showMenu}/>
         <Switch>
           <Route path="/" component={Welcome} exact/>
+          <Route path="/Caching" component={Caching} exact/>
         </Switch>
       </div>
     );
