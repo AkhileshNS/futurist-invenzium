@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 //Internal Libraries
 import './Features.css';
+import '../../global.css';
 import Info from '../Info/Info';
 
 const cssClassName = 'Features';
@@ -74,7 +75,7 @@ class Features extends Component {
                 <ul className={`${cssClassName}ul`}>
                     {list}
                 </ul>
-                <div className={`${cssClassName}line`}/>
+                <div className={`line`}/>
             </div>
         );
 

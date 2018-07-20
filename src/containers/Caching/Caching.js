@@ -3,6 +3,7 @@ import React from 'react';
 
 //Internal Libraries
 import './Caching.css';
+import '../../global.css';
 import CachingIcon from '../../assets/Caching.svg';
 import Info from '../../components/Info/Info';
 import StepBox from '../../components/StepBox/StepBox';
@@ -41,7 +42,7 @@ const Caching = () => {
                 re-download these files from the server your site is hosted on.`}
                 removeLine={true}
             />
-            <p className={`${cssClassName}subtext`} style={{fontWeight: 'bold'}}>This website was built using React which uses static caching by default. So to see this 
+            <p className={`subtext`} style={{fontWeight: 'bold'}}>This website was built using React which uses static caching by default. So to see this 
             in action simply switch off your internet connection and try reloading this page
             </p>
         </div>

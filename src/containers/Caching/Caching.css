@@ -7,14 +7,3 @@
     height: 250px;
     width: 100%;
 }
-
-.Cachingsubtext {
-    font-size: 1.6em;
-    margin: 30px 10%;
-}
-
-@media only screen and (max-width: 600px) {
-    .Cachingsubtext {
-        margin: 30px 5%;
-    }
-}

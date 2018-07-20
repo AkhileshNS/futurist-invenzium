@@ -36,14 +36,6 @@
     padding: 8px;
 }
 
-.Featuresline {
-    background: black;
-    width: 90%;
-    height: 1px;
-    display: inline-block;
-    margin-top: 90px;
-}
-
 @media only screen and (max-width: 768px){
     .Featuresul {
         width: 90%;
