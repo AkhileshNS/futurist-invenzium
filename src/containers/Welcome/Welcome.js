@@ -27,7 +27,7 @@ class Welcome extends Component {
                     <Info />
                 </section>
                 <section id={"Features"}>
-                    <Features />
+                    <Features history={this.props.history}/>
                 </section>
                 <section id={"Tutorial"}>
                     <Tutorial />

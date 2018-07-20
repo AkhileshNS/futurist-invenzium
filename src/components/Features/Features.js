@@ -1,6 +1,5 @@
 //External Libraries
 import React from 'react';
-import {HashLink as Link} from 'react-router-hash-link';
 
 //Internal Libraries
 import './Features.css';
@@ -25,14 +24,18 @@ const descList = [
     'Access Native Device Features. Ex: Camera'
 ];
 
-const Features = () => {
+const Features = (props) => {
+
+    console.log(props.history);
+
+    //You can use props.history.push or .replace to navigate
 
     var list = [];
 
     for (var i in hashList){
         list.push(<li key={hashList[i]} className={`${cssClassName}li`}>
             <div className={`${cssClassName}lidiv`}>
-                <Link style={LinkStyle} to={`/#${hashList[i]}`} smooth>{hashList[i]}</Link>
+                <p style={LinkStyle}>{hashList[i]}</p>
             </div>
             <p className={`${cssClassName}subtext`} > {descList[i]}</p>
         </li>)

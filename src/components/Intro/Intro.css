@@ -3,22 +3,9 @@
     text-align: center;
 }
 
-.Intro header {
-    width: 100%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    background-color: black;
-    color: white;
-}
-
-.Intro header p {
-    font-size: 2.4em;
-    font-family: 'Anton', sans-serif;
-}
-
 .Intro img{
     height: 200px;
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 .Intro .Introsubtext {
