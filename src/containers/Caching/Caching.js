@@ -17,40 +17,56 @@ class Caching extends Component {
         super(props);
 
         this.state = {
-            list: []
+            list: [],
+            netErr: false
         }
     }
 
     addToList = () => {
-        let getTime1 = new Date().getMilliseconds();
+        let v0 = performance.now();
 
         let prevList = [...this.state.list];
         axios.get('https://jsonplaceholder.typicode.com/photos')
         .then((res) => {
-            let getTime2 = new Date().getMilliseconds();
-            let time = getTime2 - getTime1;
+            let v1 = performance.now();
+            let time = Math.round(v1-v0);
             prevList.push({
                 val: JSON.stringify(res.data,null, 2),
                 time
             });
             this.setState({
-                list: prevList
+                list: prevList,
+                netErr: false
             }); 
         }).catch((err) => {
             console.log(`Error Getting data from jsonplaceholder\n${err}`);
+            this.setState({
+                netErr: true
+            })
         });
+    }
+
+    clearCache = () => {
+        if ('serviceWorker' in navigator){
+            navigator.serviceWorker.controller.postMessage('clear');
+        }
     }
 
     render() {
 
         let list = [];
         let populus = this.state.list;
+        let network_error = null;
 
         for (let i in populus) {
             list.push(<li className={`${cssClassName}li`} key={i}>
                 <textarea className={`${cssClassName}input`} defaultValue={populus[i].val} />
                 <p>{populus[i].time}ms</p>
             </li>);
+        }
+
+        if(this.state.netErr===true){
+            network_error = <p className='subtext'>No Internet Connection and Cached data is empty, please switch on internet and try again.</p>
         }
 
         return (
@@ -99,18 +115,25 @@ class Caching extends Component {
                 downloading files from another site) made by your site and storing these files in a similar fashion to static caching.`}
                     removeLine={true}
                 />
-                <p className={`subtext`} style={{fontWeight: 'bold'}}>
+                <p className={`subtext`}><strong>
                     IMPORTANT PLEASE NOTE: We are downloading json data in this demo, generally however this is not recommended for caching, it is 
                     better to use IndexedDB instead for storing JSON data. This demo is for presentation purposes only. Generally speaking, it is
-                    better to replace dynamic caching entirely with IndexedDB since it is better designed to store dynamic content<br /><br />
+                    better to replace dynamic caching entirely with IndexedDB since it is better designed to store dynamic content</strong><br /><br />
                     We have built a simple demo that will show you how Dynamic caching works. In the below example, when you press the download
                     button for the first time ,a network call is made (to <a href='https://jsonplaceholder.typicode.com/photos' rel="noopener noreferrer" 
                     target='_blank'>https://jsonplaceholder.typicode.com/photos</a>) for the first time and as a result depending on the type of 
                     network connection you have, we recommend a slower one just to better see how this works, you should experience a delay. 
                     But after this if you tap the download button again, it will instantaneously load, and this is bcoz this time we are getting
-                    it from local cache instead of downloading it again from the above site.
+                    it from local cache instead of downloading it again from the above site. As a result, you can turn off the internet and 
+                    tap download again and it will still work <br/><br/>If you tap/click the clear button it will clear
+                    the cache and you should see the network delay again when you tap/click the download button (Needless to say,this is because the network
+                    call is being made again, you will need internet connection for it to work as well). P.S: here the delay (in ms) indicates
+                    the gap between when the network call is made and the response is received, time taken to render the new content is not taken into
+                    account.
                 </p>
-                <button className={`${cssClassName}button`} onClick={this.addToList}>Download</button><br />
+                <button className={`${cssClassName}button`} onClick={this.addToList}>Download</button>
+                <button className={`${cssClassName}button`} onClick={this.clearCache} style={{marginLeft: '4px'}}>Clear</button><br />
+                {network_error}
                 <ul className={`${cssClassName}ul`}>
                     {list}
                 </ul>
