@@ -9,6 +9,7 @@ import AppBar from './containers/AppBar/AppBar';
 //Path Components;
 import Welcome from './containers/Welcome/Welcome';
 import Caching from './containers/Caching/Caching';
+import Manifest from './containers/Manifest/Manifest';
 
 const cssClassName = "App";
 
@@ -18,7 +19,33 @@ class App extends Component {
     super(props);
 
     this.state = {
-      show: false
+      show: false,
+      deferredPrompt: null
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      console.log('beforeinstallevent triggereds');
+      this.setState({
+        deferredPrompt: e
+      });
+    });
+  }
+
+  showPrompt = () => {
+    if(this.state.deferredPrompt!=null){
+      let dPrompt = this.state.deferredPrompt;
+      dPrompt.prompt();
+      dPrompt.userChoice
+      .then((res) => {
+        if(res.outcome==='accepted'){
+          this.setState({
+            deferredPrompt: null
+          })
+        }
+      });
     }
   }
 
@@ -37,6 +64,7 @@ class App extends Component {
         <Switch>
           <Route path="/" component={Welcome} exact/>
           <Route path="/Caching" component={Caching} exact/>
+          <Route path="/Manifest" render={(props) => <Manifest {...props} deferredPrompt={this.state.deferredPrompt} showPrompt={this.showPrompt}/>} exact/>
         </Switch>
       </div>
     );

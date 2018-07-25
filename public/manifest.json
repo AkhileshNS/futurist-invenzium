@@ -1,6 +1,7 @@
 {
-  "short_name": "Futurist Invenzium",
-  "name": "An Invenzium of Futuristic Technologies like PWAs",
+  "short_name": "FI_PWA",
+  "name": "Futurist Invenzium",
+  "description": "An Invenzium of Futuristic Technologies like PWAs",
   "icons": [
     {
       "src": "icons/appicon_48x48.png",

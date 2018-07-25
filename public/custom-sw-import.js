@@ -3,6 +3,8 @@
 var CACHE_STATIC_NAME = 'fonts-v1';
 var CACHE_DYNAMIC_NAME = 'dynamic-v3';
 
+var base_url = "http://localhost:5000";
+
 self.addEventListener('install', function(event) {
   console.log('install prompt : 1');
   event.waitUntil(
@@ -49,7 +51,8 @@ self.addEventListener('fetch', function(event) {
               //here res is the network response which we are storing into cache
               return caches.open(CACHE_DYNAMIC_NAME)
               .then(function(cache) {
-                if(event.request.url!='http://localhost:5000/service-worker.js'){
+                if(event.request.url!=`${base_url}/service-worker.js` &&
+                event.request.url!=`${base_url}/manifest.json`){
 
                   console.log(`Cached ${event.request.url}`);
                   cache.put(event.request.url, networkRes.clone());

@@ -17,6 +17,27 @@
     margin-top: 90px;
 }
 
+.Button {
+    border: 2px solid black;
+    padding: 6px;
+    background-color: black;
+    color: white;
+    font-size: 1.6em;
+    border-radius: 3px;
+    font-family: 'Anton', sans-serif;
+    outline: none;
+}
+
+.Button:hover {
+    background-color: white;
+    color: black; 
+}
+
+.Button:active {
+    background-color: black;
+    color: white;
+}
+
 @media only screen and (max-width: 600px) {
     .subtext {
         margin: 30px 5%;

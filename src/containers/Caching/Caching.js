@@ -131,8 +131,8 @@ class Caching extends Component {
                     the gap between when the network call is made and the response is received, time taken to render the new content is not taken into
                     account.
                 </p>
-                <button className={`${cssClassName}button`} onClick={this.addToList}>Download</button>
-                <button className={`${cssClassName}button`} onClick={this.clearCache} style={{marginLeft: '4px'}}>Clear</button><br />
+                <button className='Button' onClick={this.addToList}>Download</button>
+                <button className='Button' onClick={this.clearCache} style={{marginLeft: '4px'}}>Clear</button><br />
                 {network_error}
                 <ul className={`${cssClassName}ul`}>
                     {list}
