@@ -1,0 +1,74 @@
+.Indexed {
+    text-align: center;
+    width: 100%;
+    margin-top: 45px;
+}
+
+.Indexedimg {
+    margin-top: 30px;
+    height: 350px;
+}
+
+.Indexedinputbox {
+    width: 600px;
+    background-color: white;
+    border: 1px solid black;
+    display: inline-block;
+    padding: 8px;
+}
+
+.Indexedinput {
+    width: 90%;
+    padding: 4px;
+    border: 1px solid black;
+    margin-bottom: 8px;
+    font-size: 1.6em;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.Indexedul {
+    list-style-type: none;
+    width: 768px;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.Indexedli {
+    margin: 8px;
+    padding-bottom: 8px;
+    border: 1px solid black;
+}
+
+.Indexedli:hover {
+    box-shadow: 0px 0px 1px 1px black;
+}
+
+.Indexedlidiv {
+    background-color: black;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px;
+}
+
+.Indexedsubtext {
+    display: inline;
+    font-size: 1.6em;
+    color: black;
+}
+
+@media only screen and (max-width: 768px){
+    .Indexedul {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .Indexedinputbox {
+        width: 90%;
+    }
+}
