@@ -6,7 +6,7 @@
 
 .Indexedimg {
     margin-top: 30px;
-    height: 350px;
+    height: 250px;
 }
 
 .Indexedinputbox {
@@ -23,9 +23,17 @@
     border: 1px solid black;
     margin-bottom: 8px;
     font-size: 1.6em;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    resize: none;
+}
+
+.Indexedtextarea {
+    width: 90%;
+    padding: 4px;
+    border: 1px solid black;
+    margin-bottom: 8px;
+    font-size: 1.6em;
+    resize: none;
+    z-index: 0;
 }
 
 .Indexedul {

@@ -81,8 +81,8 @@ class Indexed extends Component {
         let mainList = this.state.list;
 
         for (let i in mainList){
-            list.push(<li key={mainList[i].id} className={`${cssClassName}li`} onClick={() => this.deletePost(mainList[i].id)}>
-                <div className={`${cssClassName}lidiv`}>
+            list.push(<li key={mainList[i].id} className={`${cssClassName}li`}>
+                <div className={`${cssClassName}lidiv`} onClick={() => this.deletePost(mainList[i].id)}>
                     <p style={LinkStyle}>{mainList[i].title}</p>
                 </div>
                 <p className={cssClassName+`subtext`}> {mainList[i].subtext}</p>
@@ -114,7 +114,7 @@ class Indexed extends Component {
                     will be saved locally meaning when you revisit the site later or go offline, your posts will still be availabe. Even better,
                     since IndexedDB is essentially a local Database, once combined with static caching, you can even create and edit posts 
                     completely offline (something which you could, in the past, only do with mobile apps). To try this, simply switch off your net 
-                    connection and try creating/editing posts.<br /> Note: If you want to delete a post ,just click on it.
+                    connection and try creating/editing posts.<br /><strong>Note: If you want to delete a post, just click on it's title.</strong>
                 </p>
                 <div className={cssClassName+'inputbox'}>
                     <input
@@ -127,7 +127,7 @@ class Indexed extends Component {
                     <textarea
                         value={this.state.content}
                         onChange={e => this.updateContentValue(e)} 
-                        className={cssClassName+"input"} 
+                        className={cssClassName+"textarea"} 
                         placeholder="Post Description"
                         style={{height: '100px'}}
                     />
