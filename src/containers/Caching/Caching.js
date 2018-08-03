@@ -48,7 +48,7 @@ class Caching extends Component {
 
     clearCache = () => {
         if ('serviceWorker' in navigator){
-            navigator.serviceWorker.controller.postMessage('clear');
+            navigator.serviceWorker.controller.postMessage('clear|');
         }
     }
 

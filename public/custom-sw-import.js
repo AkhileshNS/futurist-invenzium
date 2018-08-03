@@ -4,6 +4,26 @@ var CACHE_STATIC_NAME = 'fonts-v1';
 var CACHE_DYNAMIC_NAME = 'dynamic-v3';
 
 var base_url = "http://localhost:5000";
+importScripts('https://unpkg.com/dexie@2.0.4/dist/dexie.js');
+
+var db = new Dexie('BackgroundSync');
+
+db.version(1).stores({
+  requests: "++id, name, message"
+});
+
+const asyncLocalStorage = {
+    setItem: function (key, value) {
+        return Promise.resolve().then(function () {
+            localStorage.setItem(key, value);
+        });
+    },
+    getItem: function (key) {
+        return Promise.resolve().then(function () {
+            return localStorage.getItem(key);
+        });
+    }
+};
 
 self.addEventListener('install', function(event) {
   console.log('install prompt : 1');
@@ -69,8 +89,54 @@ self.addEventListener('fetch', function(event) {
 }); 
 
 self.addEventListener('message', function(event) {
-  if (event.data==='clear'){
+  
+  var data = event.data.split('|');
+  
+  if (data[0]==='clear'){
     console.log(`Removing ${CACHE_DYNAMIC_NAME}`);
     caches.delete(CACHE_DYNAMIC_NAME);
   }
+
+  if (data[0]==='set') {
+    var req = JSON.parse(data[1]);
+    var request = {
+      name: req.title,
+      message: req.subtext
+    }
+    db.table('requests')
+    .add(request).then(() => {
+      console.log('Added ' + request);
+    });
+  }
+
 });
+
+self.addEventListener('sync', function(e) {
+  if (e.tag==='sync-new-chat') {
+    e.waitUntil(
+      db.table('requests')
+      .toArray()
+      .then((requests) => {
+        for (var request of requests) {
+          fetch('https://teachers-notebook.firebaseio.com/public/chatroom.json', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({...request} ,null, 2)
+          })
+          .then((res) => {
+            if (res.ok) {
+              db.table('requests')
+              .delete(request.id)
+              .then(() => {
+                console.log('Successfully Removed ' + request);
+              });
+            }
+          });
+        }
+      })
+    );
+  }
+})

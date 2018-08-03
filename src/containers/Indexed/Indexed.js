@@ -96,10 +96,11 @@ class Indexed extends Component {
                     titletop='30'
                     title="IndexedDB"
                     subtext={`While not necessarily a feature directly connected to PWAs, IndexedDB is an excellent alternate to dynamic caching
-                    for storing and manipulating JSON data. IndexedDB is essentially a NoSQL database for your website. There have been many
-                    attempts to try to give web developers use of some type of local storage for their websites such as WebSQL, localStorage
-                    and sessionStorage but IndexedDB is by far the best. Since it is a NoSQL database, it saves data in the form of key-value 
-                    pairs where the values can be anything from objects to even files. Below we have provided a demo of IndexedDB in use.`}
+                    for storing and manipulating JSON data. IndexedDB is essentially a NoSQL database for your website (IndexedDB is supported 
+                    across all browsers with the exception of Opera Mini). There have been many attempts to try to give web developers 
+                    use of some type of local storage for their websites such as WebSQL, localStorage and sessionStorage but IndexedDB 
+                    is by far the best. Since it is a NoSQL database, it saves data in the form of key-value pairs where the values can 
+                    be anything from objects to even files. Below we have provided a demo of IndexedDB in use.`}
                     removeLine={true}
                 />
                 <p className="subtext" style={{fontWeight: 'bold'}}>
