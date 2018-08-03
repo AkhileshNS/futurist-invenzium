@@ -20,6 +20,8 @@ class BackgroundSync extends Component {
     constructor(props) {
         super(props);
 
+        this.getListOfRequests = this.getListOfRequests.bind(this);
+
         this.state = {
             name: '',
             message: '',
@@ -29,6 +31,15 @@ class BackgroundSync extends Component {
     }
 
     componentDidMount() {
+
+        if (!('serviceWorker' in navigator && 'SyncManager' in window)) {
+            let requests = this.state.requests;
+            requests.push({
+                title: 'Error Support',
+                subtext: "Sorry but this feature doesn't seem to be supported in your browser/device"
+            });
+            this.setState({requests});   
+        }
 
         //Get List of Chats
         firebase.database().ref().child('public/chatroom').on('child_added', (data) => {
@@ -67,6 +78,26 @@ class BackgroundSync extends Component {
                 }
             }
         });
+
+        if ('serviceWorker' in navigator && 'SyncManager' in window) {
+            this.getListOfRequests()
+            .then((res) => {
+                let requests = [];
+                let list = JSON.parse(res);
+                for (let req of list) {
+                    requests.push({
+                        title: req.name,
+                        subtext: req.message
+                    });
+                }
+                navigator.serviceWorker.ready.then((sw) => {
+                    sw.sync.register('sync-new-chat');
+                });
+                this.setState({requests});
+            }).catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     //=================================================================================================
@@ -101,14 +132,30 @@ class BackgroundSync extends Component {
                     });
                 }, 200);
             }
-            this.setState({requests});
+            this.setState({requests, message: ''});
         }
+    }
+
+    getListOfRequests = () => {
+        return new Promise(function(resolve, reject){
+            var msg_chan = new MessageChannel();
+            msg_chan.port1.onmessage = function(event){
+                if(event.data.error){
+                    reject(event.data.error);
+                } else {
+                    resolve(event.data);
+                }
+            };
+    
+            navigator.serviceWorker.controller.postMessage("get|", [msg_chan.port2]);
+        });
     }
 
     //=================================================================================================
     // Main
 
     render() {
+
         return <div className={cssClassName}>
             <img className={cssClassName+'img'} src={BackgroundSyncIcon} alt="Background Synchronization Icon"/>
             <Info 

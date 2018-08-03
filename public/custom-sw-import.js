@@ -109,6 +109,14 @@ self.addEventListener('message', function(event) {
     });
   }
 
+  if (data[0]==='get') {
+    db.table('requests')
+    .toArray()
+    .then((requests) => {
+      event.ports[0].postMessage(JSON.stringify(requests, null, 2));
+    })
+  }
+
 });
 
 self.addEventListener('sync', function(e) {

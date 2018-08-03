@@ -5,8 +5,8 @@ Pre) Make UI Changes (for who knows how long) : FINALLY DONE
 1) Connect Firebase to messages (tip: You don't need to import Firebase, just use axios and manipulate the rules)
    This also involves setting up a chronjob to store, get and compare the current date and delete chats accordingly
    FINALLY DONE
-2) Connect LocalStorage to requests
-3) Connect LocalStorage to Service Worker's Sync Manager to send Data to firebase
+2) Connect LocalStorage to requests : FINALLY DONE
+3) Connect LocalStorage to Service Worker's Sync Manager to send Data to firebase 
    Looping through LocalStorage to ensure that all requests are sent to Firebase (automatically loading them into messages)
-   and then we delete those messages from LocalStorage.
+   and then we delete those messages from LocalStorage. : FINALLY DONE using dexie
 4) Set it to up incase BackgroundSync isn't supported
