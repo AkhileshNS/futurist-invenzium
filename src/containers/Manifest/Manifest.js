@@ -11,6 +11,8 @@ let cssClassName = 'Manifest';
 
 const Manifest = (props) => { 
 
+        window.scrollTo(0,0);
+
         let installbtn = null;
 
         if(props.deferredPrompt!=null){

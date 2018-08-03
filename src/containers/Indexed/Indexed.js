@@ -42,6 +42,8 @@ class Indexed extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0,0);
+        
         db.table('posts')
         .toArray()
         .then((posts) => {

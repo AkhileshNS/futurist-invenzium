@@ -32,6 +32,8 @@ class BackgroundSync extends Component {
 
     componentDidMount() {
 
+        window.scrollTo(0,0);
+
         if (!('serviceWorker' in navigator && 'SyncManager' in window)) {
             let requests = this.state.requests;
             requests.push({
@@ -163,23 +165,23 @@ class BackgroundSync extends Component {
                 title='Background Synchronization'
                 subtext={`Web Users often experience net connectivity problems, one of these problems include when a user presses a button in
                 your website that triggers a network call to get some data, but because they have lost connection, that call cannot be made and
-                as a result, any data they were trying to upload or download is lost and has the user has redo this step again. This is where 
-                BackgroundSync comes, we can store those network calls in a local storage like indexedDB and make them once the net connection
+                as a result, any data they were trying to upload or download is lost and the user has to redo this step again. This is where 
+                BackgroundSync comes in, we can store those network calls in a local storage like indexedDB and make them once the net connection
                 returns. And the best part is that this works even if the user closes that tab or even the browser.`}
                 removeLine={true}
             />
             <p className='subtext' style={{fontWeight: 'bold'}}>
-                A classic use case of this is in a chat app/website where when a use types a chat message when offline and sends it, then 
-                using BackgroundSync you could store those chats and send them when the user comes online. 
+                A classic use case of this is in a chat app/website where if a user types a chat message when offline and sends it, then 
+                using BackgroundSync you could store those chats and send them when the user comes back online. 
             </p>
             <div className="line" style={{marginTop: '30px'}}/>
             <p className='subtext'>
-                Below is a demo of BackgroundSync in access. On the left you can see chats from a public common chatroom (All chats are deleted
-                by the end of the day, so the chatroom is fresh each day). And on the right is a place for you to send messages and also shows 
-                you any pending messages to be sent. Here we are using Dexie (indexedDB wrapper) to store any messages that cannot be sent immediately due 
+                Below is a demo of BackgroundSync in practice. In the first box, you can see chats from a public common chatroom (All chats are deleted
+                by the end of the day, so the chatroom is fresh each day). And the next box is a place for you to send messages and also shows 
+                you any pending messages to be sent. Here we are using Dexie (an indexedDB wrapper) to store any messages that cannot be sent immediately due 
                 to net connectivity problems, they are sent automatically when connection returns.<strong> To see this in action simply go offline
                 , send a message and come back online again.<br /><br />
-                Please also note that BackgroundSync has little support as of right now, only Chrome supports it. To keep track of support, 
+                Please also note that BackgroundSync has little support, as of right now, only Chrome supports it. To keep track of support, 
                 please see : (<a href="https://developer.mozilla.org/en-US/docs/Web/API/SyncManager#Browser_compatibility"  rel="noopener noreferrer" target='_blank'>
                 https://developer.mozilla.org/en-US/docs/Web/API/SyncManager#Browser_compatibility</a>)</strong>
             </p>

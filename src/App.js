@@ -27,6 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0,0);
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       console.log('beforeinstallevent triggereds');

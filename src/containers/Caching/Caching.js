@@ -22,6 +22,10 @@ class Caching extends Component {
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0,0);
+    }
+
     addToList = () => {
         let v0 = performance.now();
 
