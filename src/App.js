@@ -12,6 +12,7 @@ import Caching from './containers/Caching/Caching';
 import Manifest from './containers/Manifest/Manifest';
 import Indexed from './containers/Indexed/Indexed';
 import BackgroundSync from './containers/BackgroundSync/BackgroundSync';
+import WebPushNotifications from './containers/WebPushNotifications/WebPushNotifications';
 
 const cssClassName = "App";
 
@@ -68,8 +69,9 @@ class App extends Component {
           <Route path="/" component={Welcome} exact/>
           <Route path="/Caching" component={Caching} exact/>
           <Route path="/Manifest" render={(props) => <Manifest {...props} deferredPrompt={this.state.deferredPrompt} showPrompt={this.showPrompt}/>} exact/>
-          <Route path="/IndexedDB" component={Indexed} exact />
-          <Route path="/BackgroundSync" component={BackgroundSync} exact />
+          <Route path="/IndexedDB" component={Indexed} exact/>
+          <Route path="/BackgroundSync" component={BackgroundSync} exact/>
+          <Route path="/Web Push Notifications" component={WebPushNotifications} exact/>
         </Switch>
       </div>
     );

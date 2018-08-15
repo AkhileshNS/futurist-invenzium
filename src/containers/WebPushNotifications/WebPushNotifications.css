@@ -1,0 +1,42 @@
+.WPN {
+    text-align: center;
+    width: 100%;
+    margin-top: 45px;
+}
+
+.WPNimg {
+    height: 200px;
+    margin: 50px 0px 20px;
+}
+
+.WPNgen {
+    display: inline-block;
+    width: 400px;
+    padding: 10px;
+    border: 1px solid black;
+    box-shadow: 0px 0px 2px 2px gray;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.WPNinput {
+    width: 85%;
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 1.6em;
+    margin-bottom: 4px;
+    outline: none;
+}
+
+.WPNinput:focus {
+    box-shadow: 0px 0px 1px 1px gray;
+}
+
+.WPNfield {
+    width: 85%;
+    margin-left: 10px;
+    margin-bottom: -6px;
+    padding: 10px;
+    font-size: 1.6em;
+    text-align: start;
+}

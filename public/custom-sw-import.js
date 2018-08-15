@@ -147,4 +147,17 @@ self.addEventListener('sync', function(e) {
       })
     );
   }
-})
+});
+
+self.addEventListener('notificationclick', function(event) {
+  var notification = event.notification;
+  var action = event.action;
+
+  if(action==='confirm'){
+    
+  }
+});
+
+self.addEventListener('notificationclose', function(event) {
+
+});
