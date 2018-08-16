@@ -129,7 +129,8 @@ self.addEventListener('sync', function(e) {
                 console.log('Successfully Removed ' + request);
               });
             }
-          });
+          })
+          .catch(err => console.log(err));
         }
       })
     );
