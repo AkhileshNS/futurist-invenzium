@@ -130,6 +130,7 @@ class BackgroundSync extends Component {
                 navigator.serviceWorker.controller.postMessage('set|' + JSON.stringify(request))
                 setTimeout(() => {
                     navigator.serviceWorker.ready.then((sw) => {
+                        console.log('Pre-Sync event triggered');
                         sw.sync.register('sync-new-chat');
                     });
                 }, 200);
