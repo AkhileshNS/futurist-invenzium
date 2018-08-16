@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "cra-append-sw": "^2.5.0",
     "dexie": "^2.0.4",
     "firebase": "^5.3.1",
     "npm": "^6.4.0",
@@ -16,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cra-append-sw --skip-compile ./public/custom-sw-import.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
