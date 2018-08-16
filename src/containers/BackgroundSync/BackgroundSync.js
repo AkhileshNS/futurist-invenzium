@@ -93,8 +93,9 @@ class BackgroundSync extends Component {
                     });
                 }
                 navigator.serviceWorker.ready.then((sw) => {
-                    sw.sync.register('sync-new-chat');
-                });
+                    console.log('Pre-Sync Event fired');
+                    return sw.sync.register('sync-new-chat');
+                }).catch(err => console.log(err));
                 this.setState({requests});
             }).catch(err => {
                 console.log(err);
