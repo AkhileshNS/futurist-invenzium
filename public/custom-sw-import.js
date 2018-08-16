@@ -107,6 +107,7 @@ self.addEventListener('message', function(event) {
 });
 
 self.addEventListener('sync', function(e) {
+  console.log('SYNC event triggered');
   if (e.tag==='sync-new-chat') {
     e.waitUntil(
       db.table('requests')
