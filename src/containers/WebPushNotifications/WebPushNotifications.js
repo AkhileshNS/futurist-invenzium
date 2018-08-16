@@ -9,6 +9,7 @@ import Info from '../../components/Info/Info';
 import lightbulb from '../../assets/appicon_96x96.png';
 import ImageDrop from '../../components/ImageDrop/ImageDrop';
 import Spinner from '../../components/Spinner/Spinner';
+import firebase from '../../firebase';
 
 let cssClassName = "WPN";
 
@@ -136,6 +137,45 @@ class WebPushNotifications extends Component {
         } 
 
         //new Notification('Message from SW', options);
+    }
+
+    urlBase64ToUint8Array = (base64String) => {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+          .replace(/-/g, '+')
+          .replace(/_/g, '/');
+       
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+       
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+
+    subscribeToPush = () => {
+        let reg = null;
+        navigator.serviceWorker.ready
+        .then((sw) => {
+            reg = sw;
+            return sw.pushManager.getSubscription();
+        })
+        .then((sub) => {
+            if (sub===null){
+                let vapidKey = "BKudXyuxevsjeh09Zm9HrysWIE5Q5GxBEjVT0lvvE9vxl7kNGDSLlmM0bmd5F23pQ05CUM8BGkGuiQYh_JlMpKY";
+
+                return reg.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: this.urlBase64ToUint8Array(vapidKey)
+                });
+            } 
+        })
+        .then((newSub) => {
+            let ref = firebase.database().ref().child('subscriptions').push();
+            ref.set(newSub);
+        })
+        .catch(err => console.log(err));
     }
 
     //=====================================================
