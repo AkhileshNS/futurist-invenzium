@@ -1,5 +1,6 @@
 //Internal Libraries
 import React, {Component} from 'react';
+import axios from 'axios';
 
 //External Libraries
 import '../../global.css';
@@ -55,25 +56,8 @@ class WebPushNotifications extends Component {
             console.log('User Choice : ' + result);
             if (result==='granted'){
                 this.setState({isGranted: true});
+                this.subscribeToPush();
                 this.showNotification();
-            }
-        });
-    }
-
-    subscribeToPush = () => {
-        let SW;
-        navigator.serviceWorker.ready
-        .then((sw) => {
-            SW = sw;
-            return sw.pushManager.getSubscription();
-        }).then((sub) => {
-            if (sub===null) {
-                SW.pushManager.subscribe({
-                    userVisibleOnly: true
-                });
-                //Create a new Subscription
-            } else {
-                //Already have a Subscription
             }
         });
     }
@@ -132,8 +116,13 @@ class WebPushNotifications extends Component {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready
             .then((sw) => {
-                sw.showNotification(this.state.title, options);
-            })
+                //sw.showNotification(this.state.title, options);
+                axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', JSON.stringify({
+                    title: this.state.title,
+                    ...options
+                })).then(res => console.log(res))
+                .catch(err => console.log(err));
+            });
         } 
 
         //new Notification('Message from SW', options);

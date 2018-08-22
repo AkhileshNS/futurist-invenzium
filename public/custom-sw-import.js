@@ -143,10 +143,44 @@ self.addEventListener('notificationclick', function(event) {
   var action = event.action;
 
   if(action==='confirm'){
-    
+    notification.close();
+  } else {
+    notification.close();
   }
 });
 
 self.addEventListener('notificationclose', function(event) {
+  //Listen to Notification Closes Here
+});
+
+self.addEventListener('push', function(event) {
+  let options = {
+    body: "Message from site",
+    icon: './icons/appicon_96x96.png',
+    image: '',
+    dir: 'ltr',
+    lang: 'en-US',
+    vibrate: ['100','50','200'],
+    badge: './icons/appicon_96x96.png',
+    tag: '',
+    renotify: false,
+    actions: [
+        {action: 'confirm', title: 'Okay', icon: './icons/appicon_96x96.png'},
+        {action: 'cancel', title: 'Cancel', icon: './icons/appicon_96x96.png'}
+    ]
+  };
+
+  if (event.data) {
+    options = JSON.parse(event.data.text());
+    options.icon = './icons/appicon_96x96.png';
+    options.image = '';
+    options.badge = './icons/appicon_96x96.png';
+    options.actions[0].icon = './icons/appicon_96x96.png';
+    options.actions[1].icon = './icons/appicon_96x96.png';
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(options.title, options)
+  );
 
 });

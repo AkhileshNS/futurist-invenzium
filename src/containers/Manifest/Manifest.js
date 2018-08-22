@@ -88,7 +88,7 @@ const Manifest = (props) => {
             "type": "image/png"
         }
     ],
-    "start_url": "./index.html",
+    "start_url": "/",
     "display": "standalone",
     "theme_color": "#000000",
     "background_color": "#ffffff",
