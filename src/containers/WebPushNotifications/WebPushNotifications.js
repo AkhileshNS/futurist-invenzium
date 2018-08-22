@@ -134,7 +134,7 @@ class WebPushNotifications extends Component {
         axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', 
         JSON.stringify({
             title: this.state.title,
-            ...options
+            body: options.body
         }), 
         {
             headers: {

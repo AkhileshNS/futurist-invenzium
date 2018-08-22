@@ -1,7 +1,7 @@
 
 // Dynamic Cache VERSION 3
 var CACHE_STATIC_NAME = 'fonts-v1';
-var CACHE_DYNAMIC_NAME = 'dynamic-v4';
+var CACHE_DYNAMIC_NAME = 'dynamic-v3';
 
 var base_url = "http://localhost:5000";
 importScripts('https://unpkg.com/dexie@2.0.4/dist/dexie.js');
@@ -14,9 +14,8 @@ var config = {
 };
 firebase.initializeApp(config);
 
-firebase.messaging().setBackgroundMessageHandler(function(Payload) {
-  console.log('Received background message ', Payload);
-  var payload = JSON.parse(Payload);
+firebase.messaging().setBackgroundMessageHandler(function(payload) {
+  console.log('Received background message ', payload);
   var title = payload.data.title;
   var options = {
     body: payload.data.body,
@@ -85,9 +84,7 @@ self.addEventListener('fetch', function(event) {
               //here res is the network response which we are storing into cache
               return caches.open(CACHE_DYNAMIC_NAME)
               .then(function(cache) {
-                if(event.request.url!=`${base_url}/service-worker.js` &&
-                event.request.url!=`${base_url}/manifest.json`){
-
+                if(event.request.url==='https://jsonplaceholder.typicode.com/photos'){
                   console.log(`Cached ${event.request.url}`);
                   cache.put(event.request.url, networkRes.clone());
                 }
