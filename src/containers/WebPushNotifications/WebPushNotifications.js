@@ -150,11 +150,11 @@ class WebPushNotifications extends Component {
     subscribeToPush = () => {
         let reg = null;
         navigator.serviceWorker.ready
-        .then((sw) => {
+        .then(sw => {
             reg = sw;
             return sw.pushManager.getSubscription();
         })
-        .then((sub) => {
+        .then(sub => {
             if (sub===null){
                 let vapidKey = "BKudXyuxevsjeh09Zm9HrysWIE5Q5GxBEjVT0lvvE9vxl7kNGDSLlmM0bmd5F23pQ05CUM8BGkGuiQYh_JlMpKY";
 
@@ -164,7 +164,8 @@ class WebPushNotifications extends Component {
                 });
             } 
         })
-        .then((newSub) => {
+        .then(newSub => {
+            console.log(newSub);
             let ref = firebase.database().ref().child('subscriptions').push();
             ref.set(newSub);
         })
