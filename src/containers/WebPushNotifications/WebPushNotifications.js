@@ -120,7 +120,11 @@ class WebPushNotifications extends Component {
                 axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', JSON.stringify({
                     title: this.state.title,
                     ...options
-                })).then(res => console.log(res))
+                }), {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                }).then(res => console.log(res))
                 .catch(err => console.log(err));
             });
         } 
