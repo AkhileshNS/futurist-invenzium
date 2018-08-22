@@ -63,6 +63,11 @@ class WebPushNotifications extends Component {
             console.log('User has granted permission');
             this.setState({isGranted: true});
             this.registerTokenController();
+            return firebase.messaging().getToken();
+        }).then(token => {
+            console.log('Received Token');
+            let ref = firebase.database().ref().child('subscriptions').push();
+            ref.set({token});
         }).catch(err => console.log('User has refused to grant permission : ',err));
     }
 

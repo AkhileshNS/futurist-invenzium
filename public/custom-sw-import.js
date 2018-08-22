@@ -20,7 +20,7 @@ firebase.messaging().setBackgroundMessageHandler(function(payload) {
   var options = {
     body: payload.data.body,
     icon: './icons/appicon_96x96.png',
-    dir: 'ltr',
+    dir: payload.data.dir,
     lang: 'en-US',
     vibrate: payload.data.vibrate,
     badge: './icons/appicon_96x96.png',
