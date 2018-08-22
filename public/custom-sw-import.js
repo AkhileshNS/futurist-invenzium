@@ -1,7 +1,7 @@
 
 // Dynamic Cache VERSION 3
 var CACHE_STATIC_NAME = 'fonts-v1';
-var CACHE_DYNAMIC_NAME = 'dynamic-v3';
+var CACHE_DYNAMIC_NAME = 'dynamic-v4';
 
 var base_url = "http://localhost:5000";
 importScripts('https://unpkg.com/dexie@2.0.4/dist/dexie.js');
