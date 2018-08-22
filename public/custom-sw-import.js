@@ -14,8 +14,9 @@ var config = {
 };
 firebase.initializeApp(config);
 
-firebase.messaging().setBackgroundMessageHandler(function(payload) {
-  console.log('Received background message ', payload);
+firebase.messaging().setBackgroundMessageHandler(function(Payload) {
+  console.log('Received background message ', Payload);
+  var payload = JSON.parse(Payload);
   var title = payload.data.title;
   var options = {
     body: payload.data.body,
