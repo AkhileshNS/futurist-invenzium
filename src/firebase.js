@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/messaging';
 
 // Initialize Firebase
 var config = {
@@ -13,3 +14,4 @@ var config = {
 firebase.initializeApp(config);
 
 export default firebase;
+export const apiKey = config.apiKey;

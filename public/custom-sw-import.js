@@ -5,6 +5,32 @@ var CACHE_DYNAMIC_NAME = 'dynamic-v4';
 
 var base_url = "http://localhost:5000";
 importScripts('https://unpkg.com/dexie@2.0.4/dist/dexie.js');
+importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js');
+
+// Initialize Firebase
+var config = {
+  messagingSenderId: "390478140120"
+};
+firebase.initializeApp(config);
+
+firebase.messaging().setBackgroundMessageHandler(function(payload) {
+  console.log('Received background message ', payload);
+  var title = payload.data.title;
+  var options = {
+    body: payload.data.body,
+    icon: './icons/appicon_96x96.png',
+    dir: 'ltr',
+    lang: 'en-US',
+    vibrate: payload.data.vibrate,
+    badge: './icons/appicon_96x96.png',
+    tag: payload.data.tag,
+    renotify: payload.data.renotify,
+    actions: payload.data.actions
+  };
+  
+  return self.registration.showNotification(title, options);
+});
 
 var db = new Dexie('BackgroundSync');
 

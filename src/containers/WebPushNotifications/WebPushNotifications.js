@@ -46,20 +46,35 @@ class WebPushNotifications extends Component {
                 this.setState({isGranted: true});
             }
         }
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready
+            .then(sw => {
+                firebase.messaging().useServiceWorker(sw);
+            });
+        }
     }
 
     //====================================================
     // Custom Functions
 
     askPermission = () => {
-        Notification.requestPermission(result => {
-            console.log('User Choice : ' + result);
-            if (result==='granted'){
-                this.setState({isGranted: true});
-                this.subscribeToPush();
-                this.showNotification();
-            }
-        });
+        firebase.messaging().requestPermission()
+        .then(() => {
+            console.log('User has granted permission');
+            this.setState({isGranted: true});
+            this.registerTokenController();
+        }).catch(err => console.log('User has refused to grant permission : ',err));
+    }
+
+    registerTokenController = () => {
+        firebase.messaging().onTokenRefresh(() => {
+            firebase.messaging().getToken()
+            .then(token => {
+                console.log('Received Token');
+                let ref = firebase.database().ref().child('subscriptions').push();
+                ref.set({token});
+            }).catch(err => console.log('Error Getting Token: ', err));
+        })
     }
 
     showNotification = () => {
@@ -111,65 +126,24 @@ class WebPushNotifications extends Component {
             ]
         };
 
-        //console.log(options);
+        axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', 
+        JSON.stringify({
+            title: this.state.title,
+            ...options
+        }), 
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(res => console.log(res))
+        .catch(err => console.log(err));
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready
             .then((sw) => {
                 //sw.showNotification(this.state.title, options);
-                axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', JSON.stringify({
-                    title: this.state.title,
-                    ...options
-                }), {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                }).then(res => console.log(res))
-                .catch(err => console.log(err));
             });
-        } 
-
-        //new Notification('Message from SW', options);
-    }
-
-    urlBase64ToUint8Array = (base64String) => {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding)
-          .replace(/-/g, '+')
-          .replace(/_/g, '/');
-       
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
-       
-        for (let i = 0; i < rawData.length; ++i) {
-          outputArray[i] = rawData.charCodeAt(i);
         }
-        return outputArray;
-    }
-
-    subscribeToPush = () => {
-        let reg = null;
-        navigator.serviceWorker.ready
-        .then(sw => {
-            reg = sw;
-            return sw.pushManager.getSubscription();
-        })
-        .then(sub => {
-            if (sub===null){
-                let vapidKey = "BKudXyuxevsjeh09Zm9HrysWIE5Q5GxBEjVT0lvvE9vxl7kNGDSLlmM0bmd5F23pQ05CUM8BGkGuiQYh_JlMpKY";
-
-                return reg.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: this.urlBase64ToUint8Array(vapidKey)
-                });
-            } 
-        })
-        .then(newSub => {
-            console.log(newSub);
-            let ref = firebase.database().ref().child('subscriptions').push();
-            ref.set(newSub);
-        })
-        .catch(err => console.log(err));
     }
 
     //=====================================================
