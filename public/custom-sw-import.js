@@ -16,17 +16,35 @@ firebase.initializeApp(config);
 
 firebase.messaging().setBackgroundMessageHandler(function(payload) {
   console.log('Received background message ', payload);
+
+  var vibrate = payload.vibrate.split(' ');
+  for (let i in vibrate){
+    vibrate[i] = parseInt(vibrate[i],10);
+  }
+
+  var renotify = (payload.renotify==='true') ? true : false;
+
+  var actions = payload.actions.trim().split(' ');
+  for (var i in actions) {
+    var action = actions[i].split(',');
+    actions[i] = {
+      action: action.action,
+      title: action.title,
+      icon: './icons/appicon_96x96.png'
+    }
+  }
+
   var title = payload.data.title;
   var options = {
     body: payload.data.body,
     icon: './icons/appicon_96x96.png',
     dir: payload.data.dir,
     lang: 'en-US',
-    vibrate: payload.data.vibrate,
+    vibrate,
     badge: './icons/appicon_96x96.png',
     tag: payload.data.tag,
-    renotify: payload.data.renotify,
-    actions: payload.data.actions
+    renotify,
+    actions
   };
   
   return self.registration.showNotification(title, options);

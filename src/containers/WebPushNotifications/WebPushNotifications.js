@@ -13,6 +13,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import firebase from '../../firebase';
 
 let cssClassName = "WPN";
+let firebasetoken;
 
 class WebPushNotifications extends Component {
 
@@ -35,7 +36,14 @@ class WebPushNotifications extends Component {
             renotify: false,
             iconLabel: 'Drop or Upload Image',
             imageLabel: 'Drop or Upload Image',
-            badgeLabel: 'Drop or Upload Image'
+            badgeLabel: 'Drop or Upload Image',
+            actions: [
+                {action: 'confirm', title: 'Okay', icon: lightbulb},
+                {action: 'cancel', title: 'Cancel', icon: lightbulb}
+            ],
+            action: '',
+            channel: '',
+            listening: false
         };
     }
 
@@ -65,9 +73,8 @@ class WebPushNotifications extends Component {
             this.registerTokenController();
             return firebase.messaging().getToken();
         }).then(token => {
-            console.log('Received Token');
-            let ref = firebase.database().ref().child('subscriptions').push();
-            ref.set({token});
+            firebasetoken = token;
+            firebase.database().ref().child('subscriptions').child(token).set({token, channel: this.state.channel});
         }).catch(err => console.log('User has refused to grant permission : ',err));
     }
 
@@ -75,9 +82,8 @@ class WebPushNotifications extends Component {
         firebase.messaging().onTokenRefresh(() => {
             firebase.messaging().getToken()
             .then(token => {
-                console.log('Received Token');
-                let ref = firebase.database().ref().child('subscriptions').push();
-                ref.set({token});
+                firebasetoken = token;
+                firebase.database().ref().child('subscriptions').child(token).set({token, channel: this.state.channel});
             }).catch(err => console.log('Error Getting Token: ', err));
         })
     }
@@ -115,6 +121,11 @@ class WebPushNotifications extends Component {
             renotify = true;
         }
 
+        let actions = "";
+        for (let action of this.state.actions) {
+            actions += (action.action + "," + action.title + " ");
+        }
+
         let options = {
             body: this.state.body,
             icon,
@@ -125,28 +136,33 @@ class WebPushNotifications extends Component {
             badge,
             tag: this.state.tag,
             renotify,
-            actions: [
-                {action: 'confirm', title: 'Okay', icon: lightbulb},
-                {action: 'cancel', title: 'Cancel', icon: lightbulb}
-            ]
+            actions: this.state.actions
         };
 
-        axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', 
-        JSON.stringify({
-            title: this.state.title,
-            body: options.body
-        }, null, 2), 
-        {
-            headers: {
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(res => console.log(res))
-        .catch(err => console.log(err));
+        if (this.state.channel!==''){
+            axios.post('https://us-central1-teachers-notebook.cloudfunctions.net/sendNotification', 
+            JSON.stringify({
+                title: this.state.title,
+                body: options.body,
+                dir: options.dir,
+                vibrate: this.state.vibrate,
+                tag: options.tag,
+                renotify: this.state.renotify.toString(),
+                actions,
+                channel: this.state.channel
+            }, null, 2), 
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                }
+            }).then(res => console.log(res))
+            .catch(err => console.log(err));
+        } 
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready
             .then((sw) => {
-                //sw.showNotification(this.state.title, options);
+                sw.showNotification(this.state.title, options);
             });
         }
     }
@@ -184,10 +200,57 @@ class WebPushNotifications extends Component {
         });
     }
 
+    addAction = () => {
+        for (let action of this.state.actions) {
+            if (action.title===this.state.action){
+                alert("Each Action must be unique");
+                return;
+            }
+        }
+        this.setState({
+            actions: [...this.state.actions, {action: this.state.action.toLowerCase(), title: this.state.action, icon: lightbulb}]
+        });
+    }
+
+    removeAction = (title) => {
+        let actions = [...this.state.actions];
+        for (let i in actions) {
+            if (actions[i].title===title) {
+                actions.splice(i,1);
+            }
+        }
+        this.setState({actions});
+    }
+
+    startOrStopListening = () => {
+        if (!this.state.listening) {
+            firebase.database().ref().child('subscriptions').child(firebasetoken).child('channel').set(this.state.channel)
+            .then(() => {
+                this.setState({
+                    listening: true
+                });
+            }).catch(err => console.log(err));
+        }
+
+        if (this.state.listening) {
+            firebase.database().ref().child('subscriptions').child(firebasetoken).child('channel').set('')
+            .then(() => {
+                this.setState({
+                    listening: true
+                });
+            }).catch(err => console.log(err));
+        }
+    }
+
     //====================================================
     // Main
     
     render() {
+
+        let actions = [];
+        for (let action of this.state.actions) {
+            actions.push(<p className={cssClassName+"action"} key={action.action} onClick={() => this.removeAction(action.title)}>{action.title}</p>)
+        }
 
         let askPermissionBtn = null;
 
@@ -284,9 +347,34 @@ class WebPushNotifications extends Component {
                         onChange={e => this.onChange('renotify', e)} 
                         values={['true','false']} 
                         list={['True','False']}
-                    /><br /><br />
+                    />
+                <p className={cssClassName+'field'}>Create Actions that you would like to add to your notifications. (Click on an action to remove it)</p>
+                    {actions}
+                    <input 
+                        value={this.state.action} 
+                        onChange={e => this.onChange('action',e)} 
+                        className={cssClassName+"input"} 
+                        type="text" 
+                        placeholder="Title" 
+                        style={{width: '50%', paddingTop: '12px'}}
+                    />
+                    <button className='Button' onClick={this.addAction} style={{marginLeft: '8px'}}>Add Action</button><br /><br />
                 <button className='Button' onClick={this.showNotification}>Send Notification</button>
             </div>
+            <p className='title' style={{marginTop: '30px'}}>Push Channels</p>
+            <p className='subtext'>You can also listen to and push notification messages to a specific channel. If any of your devices are 
+            listening to your channel, then they will receive notifications sent to that specific channel. Keep in mind that other devices 
+            beside your own might be listening to your channel, so try to set a unique channel</p>
+            <input 
+                value={this.state.channel}
+                onChange={e => this.onChange('channel',e)}
+                className={cssClassName+"input"}
+                type="text"
+                placeholder="Channel Name"
+                style={{width: "300px"}}
+            /><br /><br />
+            <button className='Button' onClick={this.startOrStopListening}>{!this.state.listening ? "Listen" : "Stop Listening"}</button>
+            <button className='Button' onClick={this.showNotification} style={{marginLeft: '8px', marginBottom: '30px'}}>Send</button>
         </div>;
     }
 }

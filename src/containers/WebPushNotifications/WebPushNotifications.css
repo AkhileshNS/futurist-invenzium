@@ -40,3 +40,19 @@
     font-size: 1.6em;
     text-align: start;
 }
+
+.WPNaction {
+    width: 85%;
+    padding: 10px;
+    margin-left: 20px;
+    margin-bottom: 8px;
+    font-size: 1.6em;
+    border: 1px solid black;
+    background-color: #F0F0F1;
+    color: black;
+    cursor: pointer;
+}
+
+.WPNaction:active {
+    background-color: white;
+}
