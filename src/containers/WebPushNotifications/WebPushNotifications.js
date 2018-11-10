@@ -361,20 +361,22 @@ class WebPushNotifications extends Component {
                     <button className='Button' onClick={this.addAction} style={{marginLeft: '8px'}}>Add Action</button><br /><br />
                 <button className='Button' onClick={this.showNotification}>Send Notification</button>
             </div>
-            <p className='title' style={{marginTop: '30px'}}>Push Channels</p>
-            <p className='subtext'>You can also listen to and push notification messages to a specific channel. If any of your devices are 
-            listening to your channel, then they will receive notifications sent to that specific channel. Keep in mind that other devices 
-            beside your own might be listening to your channel, so try to set a unique channel</p>
-            <input 
-                value={this.state.channel}
-                onChange={e => this.onChange('channel',e)}
-                className={cssClassName+"input"}
-                type="text"
-                placeholder="Channel Name"
-                style={{width: "300px"}}
-            /><br /><br />
-            <button className='Button' onClick={this.startOrStopListening}>{!this.state.listening ? "Listen" : "Stop Listening"}</button>
-            <button className='Button' onClick={this.showNotification} style={{marginLeft: '8px', marginBottom: '30px'}}>Send</button>
+            <div style={{display: Disp}}>
+                <p className='title' style={{marginTop: '30px'}}>Push Channels</p>
+                <p className='subtext'>You can also listen to and push notification messages to a specific channel. If any of your devices are 
+                listening to your channel, then they will receive notifications sent to that specific channel. Keep in mind that other devices 
+                beside your own might be listening to your channel, so try to set a unique channel</p>
+                <input 
+                    value={this.state.channel}
+                    onChange={e => this.onChange('channel',e)}
+                    className={cssClassName+"input"}
+                    type="text"
+                    placeholder="Channel Name"
+                    style={{width: "300px"}}
+                /><br /><br />
+                <button className='Button' onClick={this.startOrStopListening}>{!this.state.listening ? "Listen" : "Stop Listening"}</button>
+                <button className='Button' onClick={this.showNotification} style={{marginLeft: '8px', marginBottom: '30px'}}>Send</button>
+            </div>
         </div>;
     }
 }

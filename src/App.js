@@ -13,6 +13,7 @@ import Manifest from './containers/Manifest/Manifest';
 import Indexed from './containers/Indexed/Indexed';
 import BackgroundSync from './containers/BackgroundSync/BackgroundSync';
 import WebPushNotifications from './containers/WebPushNotifications/WebPushNotifications';
+import NativeDeviceFeatures from './containers/NativeDeviceFeatures/NativeDeviceFeatures';
 
 const cssClassName = "App";
 
@@ -72,6 +73,7 @@ class App extends Component {
           <Route path="/IndexedDB" component={Indexed} exact/>
           <Route path="/BackgroundSync" component={BackgroundSync} exact/>
           <Route path="/Web Push Notifications" component={WebPushNotifications} exact/>
+          <Route path="/Native Device Features" component={NativeDeviceFeatures} exact/>
         </Switch>
       </div>
     );
